@@ -1,5 +1,6 @@
 import SelectedNews from "@/components/ElectedNewsPage";
 import Header from "@/components/Header";
+import MostReadPage from "@/components/MostReadPage";
 import NewsPage from "@/components/NewsPage";
 import { getCategories, getLatestHeadlines } from "@/lib/api";
 
@@ -15,6 +16,7 @@ export default function Home() {
        headline={latestHeadlines.data} />
        <NewsPage/>
        <SelectedNews/>
+       <MostReadPage/>
     </>
   );
 }
