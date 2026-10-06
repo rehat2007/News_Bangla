@@ -1,8 +1,15 @@
 import Link from "next/link";
+import MarqueeText from "react-marquee-text";
+import "react-marquee-text/dist/styles.css";
 
+interface datatype {
+  slug: string;
+  type: string;
+  title: string;
+  id: string | null;
+}
 
-
-const Header = ({ categories , headline } ) => {
+const Header = ({ categories , headline }) => {
     
     const [firsCategorieData , ...categorieData] = categories
 
@@ -15,7 +22,7 @@ const Header = ({ categories , headline } ) => {
             {/* ================= MAIN NAVIGATION ================= */}
             <div className="border-b border-gray-300">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6">
-                    <nav className="flex justify-center items-center gap-5 overflow-x-auto whitespace-nowrap scrollbar-hide sm:gap-7">
+                    <nav className="flex justify-center items-center  overflow-x-auto whitespace-nowrap scrollbar-hide sm:gap-7">
                         {categorieData.map((item,index ) => (
                             <Link
                                 key={item.slug}
@@ -37,20 +44,24 @@ const Header = ({ categories , headline } ) => {
                 <div className="mx-auto flex max-w-7xl items-center px-4 sm:px-6">
 
                     {/* Breaking News Label */}
-                    <div className="shrink-0 bg-[#d7193f] px-3 py-1.5 text-xs font-bold text-white">
+                    <div className="shrink-0 bg-[#d7193f] h-full px-3 py-3 text-xs font-bold text-white">
                         সর্বশেষ
                     </div>
 
                     {/* News Content */}
                     <div className="min-w-0 flex-1 overflow-hidden">
-                        <div className="flex items-center gap-5 overflow-x-auto whitespace-nowrap px-4 py-1.5">
+                        <div className="flex items-center gap-5 overflow-x-auto whitespace-nowrap py-1.5">
+                            <MarqueeText direction="left" duration={15}>
                               { filterHeadLine.map((item) => (
-                            <Link
-                                key={item.id}
-                                href="#">
+                                <span key={item.id} className="text-xs">
+                                     <span className="text-xs font-bold px-4 "> ● </span>
+                                        <Link href="#">
                                 {item.title}
                             </Link>
+                                </span>
+                        
                         ))}
+                        </MarqueeText>
                         </div>
                     </div>
 

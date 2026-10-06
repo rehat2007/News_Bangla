@@ -36,12 +36,12 @@ const Navbar = () => {
 
                     {/* Right information */}
                     <div className="flex items-center gap-3">
-                        <button className="hidden sm:block font-medium text-[#252525] hover:text-[#d7193f]">
+                        <button className="hidden font-bold sm:block  text-[#252525] hover:text-[#d7193f]">
                             সাইন ইন
 
                         </button>
 
-                        <button className="rounded-sm bg-[#d7193f] text-white px-3 py-1 font-medium hover:bg-[#c01134]">
+                        <button className="rounded-sm bg-[#d7193f] text-white px-3 py-1 font-bold hover:bg-[#c01134]">
                             সাইন আপ
                         </button>
                     </div>
