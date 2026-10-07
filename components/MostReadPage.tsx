@@ -2,7 +2,7 @@
   
   const MostReadPage = () => {
     return (
-      <div>
+      <div className='my-10'>
         This is most Read page
       </div>
     )

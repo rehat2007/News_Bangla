@@ -84,11 +84,11 @@ const NewsPage = ({ mainNews }: NewsPageProps) => {
 
                   <div className="min-w-0 flex-1">
                     <span className="text-[9px] font-bold uppercase tracking-wide text-[#df1f2f] sm:text-[10px]">
-                      {item.title}
+                      {mainNews.title}
                     </span>
 
                     <h2 className="mt-1 line-clamp-4 text-[12px] font-semibold leading-[1.5] text-[#222] sm:text-[13px]">
-                      {item.description}
+                      {item.title}
                     </h2>
                   </div>
                 </div>
