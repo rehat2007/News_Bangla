@@ -24,8 +24,6 @@ const Header = ({ categories, headline }: HomeProps) => {
     const [firsCategorieData, ...categorieData] = categories
 
     const filterHeadLine = headline.filter((item) => item.type === "article");
-    console.log(filterHeadLine);
-
 
     return (
         <section className="w-full bg-white">

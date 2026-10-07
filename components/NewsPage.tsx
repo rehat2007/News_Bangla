@@ -66,7 +66,6 @@ const NewsPage = ({ mainNews }: NewsPageProps) => {
           {/* ================= RIGHT SIDEBAR ================= */}
           <aside className="border-t border-[#dedbd6] lg:border-t-0 lg:pt-0">
             {firstFive.map((item) => {
-              console.log("item:", item);
 
               return (
                 <div
