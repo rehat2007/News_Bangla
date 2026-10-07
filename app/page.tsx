@@ -1,12 +1,12 @@
-import SelectedNews from "@/components/ElectedNewsPage";
 import Header from "@/components/Header";
+import HomePage from "@/components/HomePage";
 import MostReadPage from "@/components/MostReadPage";
-import NewsPage from "@/components/NewsPage";
-import { getCategories, getLatestHeadlines } from "@/lib/api";
+import { getCategories, getLatestHeadlines, getHomePage} from "@/lib/api";
 
 
 const categories = await getCategories();
 const latestHeadlines = await getLatestHeadlines();
+const homepageNews = await getHomePage();
 
 export default function Home() {
   return (
@@ -14,8 +14,7 @@ export default function Home() {
       <Header
        categories={categories.data} 
        headline={latestHeadlines.data} />
-       <NewsPage/>
-       <SelectedNews/>
+       <HomePage allNews={homepageNews} />
        <MostReadPage/>
     </>
   );

@@ -1,55 +1,31 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 
-const SelectedNews = () => {
+interface SelectedArticle {
+  id: string;
+  imageUrl: string;
+  imageAlt: string;
+  title: string;
+  date: string;
+}
+
+interface SelectedNewsData {
+  title: string;
+  articles: SelectedArticle[];
+}
+
+interface SelectedNewsProps {
+  seclactedNews: SelectedNewsData;
+}
+
+const SelectedNews = ({ seclactedNews }: SelectedNewsProps) => {
+  const articles = seclactedNews.articles;
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const news = [
-    {
-      title: "সেরা ওয়াইল্ডলাইফ ফটোগ্রাফার খেতাবের জন্য লড়াইয়ে এবার কেরকটি ছবি",
-      date: "৫ সেপ্টেম্বর, ২০২৬",
-      image: "from-[#435668] via-[#70869a] to-[#a8bac9]",
-    },
-    {
-      title: "জানালেন বিপন মেহতা চিন্তার আওতায় কেন এখনো আছেন মন্ত্রী",
-      date: "৬ সেপ্টেম্বর, ২০২৬",
-      image: "from-[#704e4d] via-[#a87a70] to-[#d29d8d]",
-    },
-    {
-      title: "সাড়ে তিনশ বছরকে বাংলায় ফেরার নানকাতে যেন না হওয়ার পরেও আছে যে গল্প",
-      date: "৮ সেপ্টেম্বর, ২০২৬",
-      image: "from-[#426866] via-[#719993] to-[#9fc5b9]",
-    },
-    {
-      title: "বিভ্রান্তির কিনারা থেকে ফিরে আসা গেল কেন এই তিনশ বছরের যাত্রা?",
-      date: "৮ সেপ্টেম্বর, ২০২৬",
-      image: "from-[#74654e] via-[#ae9974] to-[#cbb28a]",
-    },
-    {
-      title: "দেশের অর্থনীতিতে নতুন সম্ভাবনার দুয়ার খুলতে পারে এই সিদ্ধান্ত",
-      date: "৯ সেপ্টেম্বর, ২০২৬",
-      image: "from-[#526174] via-[#7f91a3] to-[#b5c2cf]",
-    },
-    {
-      title: "নতুন পরিকল্পনায় বদলে যাচ্ছে দেশের যোগাযোগ ব্যবস্থা",
-      date: "১০ সেপ্টেম্বর, ২০২৬",
-      image: "from-[#594c68] via-[#817291] to-[#b2a3c0]",
-    },
-    {
-      title: "বাংলাদেশের জন্য নতুন অর্থনৈতিক পরিকল্পনা ঘোষণা",
-      date: "১১ সেপ্টেম্বর, ২০২৬",
-      image: "from-[#536b61] via-[#78998b] to-[#a9c2b5]",
-    },
-    {
-      title: "প্রযুক্তির নতুন পরিবর্তনে বদলে যাচ্ছে মানুষের জীবন",
-      date: "১২ সেপ্টেম্বর, ২০২৬",
-      image: "from-[#62566d] via-[#897b96] to-[#b7aabd]",
-    },
-  ];
-
   const nextSlide = () => {
-    if (currentSlide < news.length - 4) {
+    if (currentSlide < articles.length - 4) {
       setCurrentSlide(currentSlide + 1);
     }
   };
@@ -61,20 +37,19 @@ const SelectedNews = () => {
   };
 
   return (
-    <section className="w-full bg-[#faf9f6] py-7">
-      <div className="mx-auto max-w-[1222px] px-4 md:px-0">
+    <section className="w-full bg-[#faf9f6] py-8 sm:py-10">
+      <div className="mx-auto max-w-[1222px] px-4 sm:px-6 md:px-8 lg:px-0">
 
-        {/* Section Header */}
-        <div className="mb-4 flex items-center border-b border-[#e5e2dd] pb-2">
-          <div className="mr-2 h-[15px] w-[3px] bg-[#e21b2d]" />
+        {/* ================= SECTION HEADER ================= */}
+        <div className="mb-5 flex items-center border-b border-[#dedbd6] pb-3">
+          <div className="mr-2 h-[17px] w-[3px] bg-[#e21b2d]" />
 
-          <h2 className="text-[14px] font-bold text-[#222]">
-            নির্বাচিত খবর
+          <h2 className="text-[15px] font-bold tracking-[-0.2px] text-[#222] sm:text-[16px]">
+            {seclactedNews.title}
           </h2>
         </div>
 
         {/* ================= NEWS CAROUSEL ================= */}
-
         <div className="overflow-hidden">
           <div
             className="flex transition-transform duration-500 ease-in-out"
@@ -82,30 +57,36 @@ const SelectedNews = () => {
               transform: `translateX(-${currentSlide * 25}%)`,
             }}
           >
-            {news.map((item, index) => (
+            {articles.map((item, index) => (
               <article
-                key={index}
-                className="w-1/4 shrink-0 px-[7px]"
+                key={item.id}
+                className="w-1/4 shrink-0 px-2 sm:px-2.5"
               >
                 {/* Image */}
-                <div
-                  className={`h-[202px] w-full rounded-[3px] bg-gradient-to-br ${item.image}`}
-                />
+                <div className="group relative aspect-[1.55/1] w-full overflow-hidden rounded-[3px] bg-gradient-to-br from-[#765b5a] via-[#b58f86] to-[#d09f8d]">
+                  <Image
+                    src={item.imageUrl}
+                    alt={item.imageAlt}
+                    width={98}
+                    height={54}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
 
                 {/* Category */}
-                <div className="mt-1.5">
-                  <span className="text-[8px] font-medium text-[#df1d2d]">
-                    নির্বাচিত খবর
+                <div className="mt-2">
+                  <span className="text-[8px] font-semibold uppercase tracking-wide text-[#df1d2d] sm:text-[9px]">
+                    {seclactedNews.title}
                   </span>
                 </div>
 
                 {/* Title */}
-                <h3 className="mt-1 text-[11px] font-bold leading-[1.45] text-[#222]">
+                <h3 className="mt-1 line-clamp-3 text-[11px] font-bold leading-[1.5] text-[#222] sm:text-[12px]">
                   {item.title}
                 </h3>
 
                 {/* Date */}
-                <p className="mt-1 text-[7px] text-[#999]">
+                <p className="mt-2 text-[8px] font-medium text-[#999] sm:text-[9px]">
                   {item.date}
                 </p>
               </article>
@@ -114,18 +95,16 @@ const SelectedNews = () => {
         </div>
 
         {/* ================= BUTTONS ================= */}
-
-        <div className="mt-5 flex items-center justify-between">
+        <div className="mt-6 flex items-center justify-between">
 
           {/* Previous Button */}
           <button
             onClick={previousSlide}
             disabled={currentSlide === 0}
-            className={`flex h-8 w-8 items-center justify-center rounded-full border text-lg transition ${
-              currentSlide === 0
-                ? "cursor-not-allowed border-[#ddd] text-[#ccc]"
-                : "border-[#222] text-[#222] hover:bg-[#222] hover:text-white"
-            }`}
+            className={`flex h-9 w-9 items-center justify-center rounded-full border text-[16px] transition-all duration-200 ${currentSlide === 0
+                ? "cursor-not-allowed border-[#dedbd6] text-[#c9c6c1]"
+                : "border-[#222] text-[#222] hover:border-[#e21b2d] hover:bg-[#e21b2d] hover:text-white"
+              }`}
           >
             ←
           </button>
@@ -133,16 +112,14 @@ const SelectedNews = () => {
           {/* Next Button */}
           <button
             onClick={nextSlide}
-            disabled={currentSlide >= news.length - 4}
-            className={`flex h-8 w-8 items-center justify-center rounded-full border text-lg transition ${
-              currentSlide >= news.length - 4
-                ? "cursor-not-allowed border-[#ddd] text-[#ccc]"
-                : "border-[#222] text-[#222] hover:bg-[#222] hover:text-white"
-            }`}
+            disabled={currentSlide >= articles.length - 4}
+            className={`flex h-9 w-9 items-center justify-center rounded-full border text-[16px] transition-all duration-200 ${currentSlide >= articles.length - 4
+                ? "cursor-not-allowed border-[#dedbd6] text-[#c9c6c1]"
+                : "border-[#222] text-[#222] hover:border-[#e21b2d] hover:bg-[#e21b2d] hover:text-white"
+              }`}
           >
             →
           </button>
-
         </div>
       </div>
     </section>

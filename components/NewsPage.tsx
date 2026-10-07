@@ -1,109 +1,100 @@
-const NewsPage = () => {
-  return (
-    <main className=" bg-[#faf9f6]  py-6 md:px-8">
-      <div className="mx-auto max-w-[1222px]">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_1fr]">
+import Image from "next/image";
 
+interface Article {
+  id: string;
+  imageUrl: string;
+  imageAlt: string;
+  title: string;
+  description: string;
+  firstPublished: string;
+}
+
+interface MainNews {
+  title: string;
+  articles: Article[];
+}
+
+interface NewsPageProps {
+  mainNews: MainNews;
+}
+
+const NewsPage = ({ mainNews }: NewsPageProps) => {
+  const [firstArticle, ...allArticle] = mainNews.articles;
+
+  const firstFive = allArticle.slice(0, 5);
+
+  return (
+    <main className="bg-[#faf9f6] px-4 py-6 sm:px-6 md:px-8 md:py-10">
+      <div className="mx-auto max-w-[1222px]">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1.45fr)_minmax(360px,0.9fr)] lg:gap-12">
           {/* ================= MAIN ARTICLE ================= */}
           <article>
             {/* Main Image */}
-            <div className="h-[260px] w-[660] overflow-hidden rounded-[3px] bg-gradient-to-br from-[#765b5a] via-[#b58f86] to-[#d09f8d] md:h-[315px]">
-              {/* Add actual image here later if needed */}
+            <div className="h-[240px] w-full overflow-hidden rounded-[4px] bg-gradient-to-br from-[#765b5a] via-[#b58f86] to-[#d09f8d] sm:h-[300px] md:h-[360px] lg:h-[390px]">
+              <Image
+                src={firstArticle.imageUrl}
+                alt={firstArticle.imageAlt}
+                width={660}
+                height={315}
+                className="h-full w-full object-cover transition-transform duration-500 hover:scale-[1.02]"
+              />
             </div>
 
             {/* Category */}
-            <div className="mt-2">
-              <span className="inline-block bg-[#e21d2d] px-2 py-[3px] text-[10px] font-semibold text-white">
-                প্রধান খবর
+            <div className="mt-4">
+              <span className="inline-block rounded-[2px] bg-[#e21d2d] px-3 py-[5px] text-[10px] font-bold tracking-wide text-white">
+                {mainNews.title}
               </span>
             </div>
 
             {/* Title */}
-            <h1 className="mt-2 text-[23px] font-bold leading-[1.35] text-[#111] md:text-[27px]">
-              কর্মীদের 'অপরাধ' নিয়ন্ত্রণ কি বিএনপির জন্য কঠিন
-              হয়ে উঠেছে?
+            <h1 className="mt-3 max-w-[780px] text-[25px] font-bold leading-[1.3] tracking-[-0.3px] text-[#111] sm:text-[29px] md:text-[34px] lg:text-[38px]">
+              {firstArticle.title}
             </h1>
 
             {/* Description */}
-            <p className="mt-3 max-w-[650px] text-[11px] leading-[1.7] text-[#777] md:text-[12px]">
-              রাজনৈতিক অস্থিরতা দেখা দিলে অনেক কঠিন হয়ে উঠেছে কি না,
-              এই প্রশ্ন ঘুরছে বিভিন্ন মহলে, কয়েকটি নির্বাচনী ফলাফল
-              কাটিয়ে যাওয়ার পরেও।
+            <p className="mt-4 max-w-[760px] text-[12px] leading-[1.8] text-[#666] sm:text-[13px] md:text-[14px]">
+              {firstArticle.description}
             </p>
 
             {/* Date */}
-            <p className="mt-3 text-[9px] text-[#999]">
-              ৩ অক্টোবর, ২০২৪ • ৭:৪০
+            <p className="mt-4 text-[10px] font-medium text-[#999]">
+              {firstArticle.firstPublished}
             </p>
           </article>
 
           {/* ================= RIGHT SIDEBAR ================= */}
-          <aside className="space-y-0">
+          <aside className="border-t border-[#dedbd6] lg:border-t-0 lg:pt-0">
+            {firstFive.map((item) => {
+              console.log("item:", item);
 
-            {/* News Item 1 */}
-            <div className="flex gap-3 border-b border-[#e5e5e5] pb-3">
-              <div className="h-[74px] w-[118px] shrink-0 rounded-[3px] bg-gradient-to-br from-[#527674] to-[#9bb9ad]" />
-              <div>
-                <span className="text-[9px] font-semibold text-[#df1f2f]">
-                  প্রধান খবর
-                </span>
+              return (
+                <div
+                  key={item.id}
+                  className="flex gap-3 border-b border-[#dedbd6] py-4 first:pt-0 last:border-b-0"
+                >
+                  <div className="h-[78px] w-[120px] shrink-0 overflow-hidden rounded-[4px] bg-gradient-to-br from-[#527674] to-[#9bb9ad] sm:h-[82px] sm:w-[130px]">
+                    <Image
+                      src={item.imageUrl}
+                      alt={item.imageAlt}
+                      width={118}
+                      height={74}
+                      className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                    />
+                  </div>
 
-                <h2 className="mt-[2px] text-[11px] font-semibold leading-[1.45] text-[#222]">
-                  পাল্লায় ধানের আমলে সত্যিই কি
-                  টাকার হাতটা এত ভালো আছে?
-                </h2>
-              </div>
-            </div>
+                  <div className="min-w-0 flex-1">
+                    <span className="text-[9px] font-bold uppercase tracking-wide text-[#df1f2f] sm:text-[10px]">
+                      {item.title}
+                    </span>
 
-            {/* News Item 2 */}
-            <div className="flex gap-3 border-b border-[#e5e5e5] py-3">
-              <div className="h-[74px] w-[118px] shrink-0 rounded-[3px] bg-gradient-to-br from-[#6d6653] to-[#d0bb91]" />
-
-              <div>
-                <span className="text-[9px] font-semibold text-[#df1f2f]">
-                  প্রধান খবর
-                </span>
-
-                <h2 className="mt-[2px] text-[11px] font-semibold leading-[1.45] text-[#222]">
-                  মাংসের দাম নিয়ে মন্ত্রীকে কথা বলতে
-                  হলো কেন?
-                </h2>
-              </div>
-            </div>
-
-            {/* News Item 3 */}
-            <div className="flex gap-3 border-b border-[#e5e5e5] py-3">
-              <div className="h-[74px] w-[118px] shrink-0 rounded-[3px] bg-gradient-to-br from-[#565579] to-[#a09dcf]" />
-
-              <div>
-                <span className="text-[9px] font-semibold text-[#df1f2f]">
-                  প্রধান খবর
-                </span>
-
-                <h2 className="mt-[2px] text-[11px] font-semibold leading-[1.45] text-[#222]">
-                  বঙ্গবন্ধুর কাশেমকে 'করণ'
-                  দিয়ে আঘাত করেছিলেন কেন?
-                </h2>
-              </div>
-            </div>
-
-            {/* News Item 4 */}
-            <div className="flex gap-3 py-3">
-              <div className="h-[74px] w-[118px] shrink-0 rounded-[3px] bg-gradient-to-br from-[#536977] to-[#9db1bb]" />
-
-              <div>
-                <span className="text-[9px] font-semibold text-[#df1f2f]">
-                  প্রধান খবর
-                </span>
-
-                <h2 className="mt-[2px] text-[11px] font-semibold leading-[1.45] text-[#222]">
-                  রাজধানী নিয়ন্ত্রণে ইরানের পর ১০
-                  কোটি মানুষ কেন ঘুরছেন বিশেষত
-                  জি-এন-এর
-                </h2>
-              </div>
-            </div>
-
+                    <h2 className="mt-1 line-clamp-4 text-[12px] font-semibold leading-[1.5] text-[#222] sm:text-[13px]">
+                      {item.description}
+                    </h2>
+                  </div>
+                </div>
+              );
+            })}
           </aside>
         </div>
       </div>

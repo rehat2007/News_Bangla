@@ -2,20 +2,30 @@ import Link from "next/link";
 import MarqueeText from "react-marquee-text";
 import "react-marquee-text/dist/styles.css";
 
-interface datatype {
-  slug: string;
-  type: string;
-  title: string;
-  id: string | null;
+interface Category {
+    slug: string;
+    title: string;
 }
 
-const Header = ({ categories , headline }) => {
-    
-    const [firsCategorieData , ...categorieData] = categories
+interface News {
+    id: string;
+    title: string;
+    type: string;
+}
+
+interface HomeProps {
+    categories: Category[];
+    headline: News[];
+}
+
+
+const Header = ({ categories, headline }: HomeProps) => {
+
+    const [firsCategorieData, ...categorieData] = categories
 
     const filterHeadLine = headline.filter((item) => item.type === "article");
     console.log(filterHeadLine);
-    
+
 
     return (
         <section className="w-full bg-white">
@@ -23,7 +33,7 @@ const Header = ({ categories , headline }) => {
             <div className="border-b border-gray-300">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6">
                     <nav className="flex justify-center items-center  overflow-x-auto whitespace-nowrap scrollbar-hide sm:gap-7">
-                        {categorieData.map((item,index ) => (
+                        {categorieData.map((item, index) => (
                             <Link
                                 key={item.slug}
                                 href="#"
@@ -52,16 +62,16 @@ const Header = ({ categories , headline }) => {
                     <div className="min-w-0 flex-1 overflow-hidden">
                         <div className="flex items-center gap-5 overflow-x-auto whitespace-nowrap py-1.5">
                             <MarqueeText direction="left" duration={15}>
-                              { filterHeadLine.map((item) => (
-                                <span key={item.id} className="text-xs">
-                                     <span className="text-xs font-bold px-4 "> ● </span>
+                                {filterHeadLine.map((item) => (
+                                    <span key={item.id} className="text-xs">
+                                        <span className="text-xs font-bold px-4 "> ● </span>
                                         <Link href="#">
-                                {item.title}
-                            </Link>
-                                </span>
-                        
-                        ))}
-                        </MarqueeText>
+                                            {item.title}
+                                        </Link>
+                                    </span>
+
+                                ))}
+                            </MarqueeText>
                         </div>
                     </div>
 
